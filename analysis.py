@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import io
 import base64
 
@@ -25,7 +25,9 @@ def run_analysis():
     plt.switch_backend('Agg')
     
     try:
-        now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # KST (UTC+9) 설정
+        kst = timezone(timedelta(hours=9))
+        now_str = datetime.now(kst).strftime('%Y-%m-%d %H:%M:%S')
         
         # 1. 데이터 다운로드
         dxy = flatten(yf.download("DX-Y.NYB", period="1y", progress=False))

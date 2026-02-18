@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import time
 
 # ===============================
@@ -34,7 +34,9 @@ plt.rcParams['axes.unicode_minus'] = False     # 마이너스 부호 깨짐 방�
 fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(10, 7), sharex=True, gridspec_kw={"height_ratios": [3, 1, 1.2, 1]})
 
 try:
-    now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # KST (UTC+9) 설정
+    kst = timezone(timedelta(hours=9))
+    now_str = datetime.now(kst).strftime('%Y-%m-%d %H:%M:%S')
     print(f"\n=> 데이터 분석 및 차트 생성 중... [{now_str}]")
 
     # ===============================
