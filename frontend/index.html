@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTC Analysis Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-glow"></div>
+    <div class="container">
+        <header>
+            <h1>BTC <span class="accent">Analysis</span></h1>
+            <p class="subtitle">Real-time Bitcoin Market Insight</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <button id="analyzeBtn" class="primary-btn">
+                    <span class="btn-text">분석 시작하기</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </div>
+
+            <div id="resultContainer" class="result-container hidden">
+                <div class="stats-grid">
+                    <div class="stat-card glass">
+                        <span class="label">현재 가격</span>
+                        <div id="priceValue" class="value">--</div>
+                        <span class="unit">USD</span>
+                    </div>
+                    <div class="stat-card glass">
+                        <span class="label">매크로 점수</span>
+                        <div id="scoreValue" class="value">--</div>
+                        <span class="unit">/ 3.0</span>
+                    </div>
+                    <div class="stat-card glass">
+                        <span class="label">마지막 업데이트</span>
+                        <div id="timeValue" class="value-small">--</div>
+                    </div>
+                </div>
+
+                <div class="chart-container glass">
+                    <img id="chartImg" src="" alt="BTC Analysis Chart">
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 BTC EveryCheck. Powered by FastAPI & Matplotlib.</p>
+        </footer>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
