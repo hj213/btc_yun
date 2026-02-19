@@ -112,11 +112,33 @@ header h1 {
     box-shadow: var(--shadow);
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.result-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 2rem;
+}
+
+.result-section {
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+}
+
+.result-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    border-left: 4px solid var(--accent-blue);
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.update-time {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 2rem;
 }
 
 .stat-card {

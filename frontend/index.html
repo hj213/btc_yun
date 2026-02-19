@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTC Analysis Dashboard</title>
+    <title>Market Analysis Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +15,8 @@
     <div class="background-glow"></div>
     <div class="container">
         <header>
-            <h1>BTC <span class="accent">Analysis</span></h1>
-            <p class="subtitle">Real-time Bitcoin Market Insight</p>
+            <h1>Market <span class="accent">Analysis</span></h1>
+            <p class="subtitle">Real-time Financial Market Insight</p>
         </header>
 
         <main>
@@ -27,34 +27,39 @@
                 </button>
             </div>
 
-            <div id="resultContainer" class="result-container hidden">
-                <div class="stats-grid">
-                    <div class="stat-card glass">
-                        <span class="label">현재 가격</span>
-                        <div id="priceValue" class="value">--</div>
-                        <span class="unit">USD</span>
-                    </div>
-                    <div class="stat-card glass">
-                        <span class="label">매크로 점수</span>
-                        <div id="scoreValue" class="value">--</div>
-                        <span class="unit">/ 3.0</span>
-                    </div>
-                    <div class="stat-card glass">
-                        <span class="label">마지막 업데이트</span>
-                        <div id="timeValue" class="value-small">--</div>
-                    </div>
-                </div>
+            <div id="resultWrapper" class="result-wrapper">
+                <!-- Analysis results will be appended here -->
+            </div>
 
-                <div class="chart-container glass">
-                    <img id="chartImg" src="" alt="BTC Analysis Chart">
-                </div>
+            <div id="lastUpdate" class="update-time hidden">
+                마지막 업데이트: <span id="timeValue">--</span>
             </div>
         </main>
-
-        <!-- <footer>
-            <p>&copy; 2026 BTC EveryCheck. Powered by FastAPI & Matplotlib.</p>
-        </footer> -->
     </div>
+
+    <!-- Template for analysis card -->
+    <template id="resultTemplate">
+        <div class="result-section">
+            <h2 class="result-title">Ticker Name</h2>
+            <div class="stats-grid">
+                <div class="stat-card glass">
+                    <span class="label">현재 가격</span>
+                    <div class="price-value value">--</div>
+                    <span class="price-unit unit">---</span>
+                </div>
+                <div class="stat-card glass">
+                    <span class="label">매크로 점수</span>
+                    <div class="score-value value">--</div>
+                    <span class="unit">/ 3.0+</span>
+                </div>
+            </div>
+
+            <div class="chart-container glass">
+                <img class="chart-img" src="" alt="Analysis Chart">
+            </div>
+        </div>
+    </template>
+
     <script src="main.js"></script>
 </body>
 

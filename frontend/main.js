@@ -1,9 +1,8 @@
 const analyzeBtn = document.getElementById('analyzeBtn');
-const resultContainer = document.getElementById('resultContainer');
-const priceValue = document.getElementById('priceValue');
-const scoreValue = document.getElementById('scoreValue');
+const resultWrapper = document.getElementById('resultWrapper');
+const resultTemplate = document.getElementById('resultTemplate');
+const lastUpdate = document.getElementById('lastUpdate');
 const timeValue = document.getElementById('timeValue');
-const chartImg = document.getElementById('chartImg');
 const btnText = analyzeBtn.querySelector('.btn-text');
 const loader = analyzeBtn.querySelector('.loader');
 
@@ -11,32 +10,58 @@ analyzeBtn.addEventListener('click', async () => {
     try {
         // UI 상태 업데이트: 로딩 중
         analyzeBtn.disabled = true;
-        btnText.textContent = '분석 중...';
+        btnText.textContent = '전체 분석 중...';
         loader.classList.remove('hidden');
+        resultWrapper.innerHTML = ''; // 이전 결과 초기화
+        lastUpdate.classList.add('hidden');
 
-        // 백엔드 API 호출 (Vite/배포 환경 통합을 위해 상대 경로 사용)
+        // 백엔드 API 호출
         const response = await fetch('/api/analyze');
         const data = await response.json();
 
         if (data.status === 'success') {
-            // 데이터 표기
-            priceValue.textContent = new Intl.NumberFormat('en-US').format(data.price);
-            scoreValue.textContent = data.score.toFixed(1);
+            // 시간 표기
             timeValue.textContent = data.time;
-            chartImg.src = data.chart;
+            lastUpdate.classList.remove('hidden');
 
-            // 결과창 표시 및 스크롤
-            resultContainer.classList.remove('hidden');
-            resultContainer.scrollIntoView({ behavior: 'smooth' });
+            // 개별 결과 렌더링
+            data.results.forEach(result => {
+                if (result.error) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'glass';
+                    errorDiv.style.padding = '1rem';
+                    errorDiv.style.color = '#f43f5e';
+                    errorDiv.textContent = `${result.name} 분석 에러: ${result.error}`;
+                    resultWrapper.appendChild(errorDiv);
+                    return;
+                }
 
-            // 점수에 따른 강조 색상 변경 (예시)
-            if (data.score >= 2) {
-                scoreValue.style.color = '#f43f5e'; // Strong (Red)
-            } else if (data.score <= 1) {
-                scoreValue.style.color = '#10b981'; // Weak (Green)
-            } else {
-                scoreValue.style.color = '#38bdf8'; // Normal (Blue)
-            }
+                const clone = resultTemplate.content.cloneNode(true);
+
+                clone.querySelector('.result-title').textContent = result.name;
+                clone.querySelector('.price-value').textContent = new Intl.NumberFormat('en-US').format(result.price);
+                clone.querySelector('.price-unit').textContent = result.unit;
+
+                const scoreEl = clone.querySelector('.score-value');
+                scoreEl.textContent = result.score.toFixed(0);
+
+                // 점수에 따른 색상 (BTC는 3점이 만점, 주식은 3점이 만점/초과 가능)
+                if (result.score >= 2) {
+                    scoreEl.style.color = '#f43f5e';
+                } else if (result.score <= 1) {
+                    scoreEl.style.color = '#10b981';
+                } else {
+                    scoreEl.style.color = '#38bdf8';
+                }
+
+                clone.querySelector('.chart-img').src = result.chart;
+                clone.querySelector('.chart-img').alt = `${result.name} 분석 차트`;
+
+                resultWrapper.appendChild(clone);
+            });
+
+            // 상단으로 스크롤
+            resultWrapper.scrollIntoView({ behavior: 'smooth' });
         } else {
             alert('에러 발생: ' + data.message);
         }
